@@ -1,0 +1,23 @@
+python -m venv zughumnan-sen202-env
+zughumnan-sen202-env\Scripts\activate
+pip install django djangorestframework
+pip freeze > requirements.txt
+# Ignore virtual environment
+zughumnan-sen202-env/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore IDE settings
+.vscode/
+.idea/
+git add requirements.txt .gitignore
+git commit -m "Added virtual environment, dependencies, and gitignore"
+git push
+## Author
+
+**Morris Kyesmang**  
+GitHub: [Zuggy77](https://github.com/Zuggy77)  
+Email: morriszughumnan@gmail.com

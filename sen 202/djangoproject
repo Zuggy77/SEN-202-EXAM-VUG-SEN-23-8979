@@ -1,0 +1,53 @@
+os.system('django-admin startproject zughumnan_staff_api')
+os.chdir('zughumnan_staff_api')
+os.system('python manage.py startapp employees')
+from django.db import models
+
+class StaffBase(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=15)
+
+    class Meta:
+        abstract = True
+
+class Manager(StaffBase):
+    department = models.CharField(max_length=100)
+    has_company_card = models.BooleanField(default=True)
+
+class Intern(StaffBase):
+    mentor = models.ForeignKey(Manager, on_delete=models.CASCADE, related_name='interns')
+    internship_end_date = models.DateField()
+    INSTALLED_APPS = [
+        ...existing apps...,
+        'employees',
+    ]
+
+    # Apply migrations
+    os.system('python manage.py makemigrations employees')
+    os.system('python manage.py migrate')
+
+    # Open Django shell
+    os.system('python manage.py shell')
+from employees.models import Manager, Intern
+import os
+
+# Create a Manager
+manager = Manager.objects.create(
+    first_name="John",
+    last_name="Doe",
+    email="john.doe@example.com",
+    phone_number="1234567890",
+    department="IT"
+)
+
+# Create an Intern
+intern = Intern.objects.create(
+    first_name="Jane",
+    last_name="Smith",
+    email="jane.smith@example.com",
+    phone_number="0987654321",
+    mentor=manager,
+    internship_end_date="2025-12-31"
+)
